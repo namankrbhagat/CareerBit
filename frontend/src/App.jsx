@@ -1,8 +1,24 @@
-import { Home } from 'lucide-react';
+import Home  from './pages/Home';
 import { Route,Routes } from 'react-router-dom';
 import Auth from './pages/Auth';
+import { useEffect } from 'react';
+import axios from 'axios';
 
+export const ServerUrl = "http://localhost:5000"
 function App() {
+  useEffect(() =>{
+    const getUser = async () =>{
+      try {
+        const result = await axios.get(ServerUrl + "/api/user/current-user",
+          {withCredentials:true}
+        )
+        console.log(result.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUser();
+  },[])
   return (
     <Routes>
       <Route path='/' element={<Home/>}/>
