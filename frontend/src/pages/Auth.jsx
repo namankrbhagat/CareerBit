@@ -8,8 +8,12 @@ import { auth, provider } from '../utils/firebase'
 import axios from 'axios'
 import { ServerUrl } from '../App'
 import { useNavigate } from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import { setUserData } from '../redux/userSlice'
 
 function Auth() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleGoogleAuth = async () => {
     try {
@@ -23,10 +27,11 @@ function Auth() {
         {withCredentials:true}
       )
 
-      console.log("Auth success:", result.data);
+      dispatch(setUserData(result.data))
       navigate("/");
     } catch (error) {
       console.log(error)
+      dispatch(setUserData(null))
     }
   }
   return (
