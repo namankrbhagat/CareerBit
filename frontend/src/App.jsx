@@ -1,9 +1,10 @@
 import Home  from './pages/Home';
 import { Route,Routes } from 'react-router-dom';
 import Auth from './pages/Auth';
+import interviewPage from './pages/interviewPage';
 import { useEffect } from 'react';
 import axios from 'axios';
-import {useSelector,useDispatch,} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { setUserData } from './redux/userSlice';
 
 export const ServerUrl = "http://localhost:5000"
@@ -30,6 +31,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/auth' element={<Auth/>}/>
+      <Route path='/interview' element={<interviewPage/>}/>
     </Routes>
   )
 }

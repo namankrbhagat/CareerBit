@@ -1,6 +1,7 @@
 import React from 'react'
 import {BsRobot} from "react-icons/bs"
 import {IoSparkles} from "react-icons/io5"
+// eslint-disable-next-line no-unused-vars
 import {motion} from "motion/react"
 import {FcGoogle} from "react-icons/fc"
 import { signInWithPopup } from 'firebase/auth'
@@ -49,7 +50,7 @@ function Auth() {
         </div>
         <h1 className='text-2xl md:text-3xl font-semibold text-center leading-snug mb-4'>
           Continue with
-          <span className='bg-green-100 text-green-600 px-3 py-1 rouded-full inline-flex items-center gap-2'>
+          <span className='bg-green-100 text-green-600 px-3 py-1 rounded-full inline-flex items-center gap-2'>
             <IoSparkles size={16}/>
             AI Smart Interview
           </span>
