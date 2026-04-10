@@ -2,7 +2,6 @@ import fs from 'fs'
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs"
 import { askAI } from '../services/openRouter.services.js';
 import User from '../models/user.model.js';
-import { use } from 'react';
 import { time } from 'console';
 import { triggerAsyncId } from 'async_hooks';
 import Interview from '../models/interview.model.js';
@@ -81,7 +80,7 @@ export const analyzeResume = async(req,res) => {
 
 export const generateQuestion = async (req,res) => {
   try {
-    const {role,experience,mode,resumeText,projects,skills} = req.body
+    let {role,experience,mode,resumeText,projects,skills} = req.body
 
     role = role?.trim();
     experience = experience?.trim();
@@ -189,7 +188,7 @@ export const generateQuestion = async (req,res) => {
 
     res.json({
       interviewId: interview._id,
-      remainingCredits: user.credits,
+      creditsLeft: user.credits,
       userName: user.name,
       questions: interview.questions
     })
