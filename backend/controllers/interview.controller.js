@@ -10,7 +10,7 @@ import { json } from 'stream/consumers';
 export const analyzeResume = async(req,res) => {
   try {
     if(!req.file){
-      return res.status(400).json({message : "Resume uploaded"})
+      return res.status(400).json({message : "Resume not uploaded"})
     }
 
     const filePath = req.file.path;
@@ -52,8 +52,8 @@ export const analyzeResume = async(req,res) => {
     ];
 
     const aiResponse = await askAI(messages);
-
-    const parsed = JSON.parse(aiResponse);
+    const cleanedResponse = aiResponse.replace(/```json/gi, "").replace(/```/g, "").trim();
+    const parsed = JSON.parse(cleanedResponse);
 
 
     fs.unlinkSync(filePath)
@@ -70,8 +70,8 @@ export const analyzeResume = async(req,res) => {
   } catch (error) {
     console.log(error);
 
-    if(req.file && fs.existsSync(file.path)){
-      fs.unlinkSync(file.path)
+    if(req.file && fs.existsSync(req.file.path)){
+      fs.unlinkSync(req.file.path)
     }
 
     return res.status(400).json({message : error.message})
@@ -100,7 +100,7 @@ export const generateQuestion = async (req,res) => {
       return res.status(400).json({message:"Not enough credits"})
     }
 
-    const projectsText = ArrayisArray(projects) && projects.length > 0 ? projects.join(",") : "None";
+    const projectsText = Array.isArray(projects) && projects.length > 0 ? projects.join(",") : "None";
     const skillsText = Array.isArray(skills) && skills.length > 0 ? skills.join(",") : "None";
 
     const safeResume = resumeText?.trim() || "None";
@@ -181,8 +181,8 @@ export const generateQuestion = async (req,res) => {
       resumeText : safeResume,
       questions: questions.map((q,i) => ({
         question:q,
-        difficulty: ["easy","easy","medium","medium","hard"][index],
-        timeLimit: [60,90,120,150,180][index]
+        difficulty: ["easy","easy","medium","medium","hard"][i],
+        timeLimit: [60,90,120,150,180][i]
       }))
     })
 
@@ -283,8 +283,9 @@ export const submitAnswer = async(req,res) => {
                 }
     ];
 
-    const aiResponse = await askAI(messages)
-    const parsed = JSON.parse(aiResponse)
+    const aiResponse = await askAI(messages);
+    const cleanedResponse = aiResponse.replace(/```json/gi, "").replace(/```/g, "").trim();
+    const parsed = JSON.parse(cleanedResponse);
 
     question.answer = answer;
     question.confidence = parsed.confidence;

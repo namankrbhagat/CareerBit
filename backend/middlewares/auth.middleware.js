@@ -4,12 +4,12 @@ export const isAuth = async (req,res,next) => {
     let {token} = req.cookies
 
     if(!token){
-      return res.status(400).json({message:"User doesn't have token"})
+      return res.status(401).json({message:"User doesn't have token"})
     }
 
     const verifyToken = jwt.verify(token,process.env.JWT_SECRET)
     if(!verifyToken){
-      return res.status(400).json({message:"User doesn't have a valid token"})
+      return res.status(401).json({message:"User doesn't have a valid token"})
     }
 
     req.userId = verifyToken.userId

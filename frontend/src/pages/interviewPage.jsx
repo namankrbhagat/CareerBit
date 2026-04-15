@@ -3,7 +3,7 @@ import Step1setup from '../components/Step1setup'
 import Step2Interview from '../components/Step2Interview'
 import Step3Report from '../components/Step3Report'
 
-function interviewPage() {
+function InterviewPage() {
   const [step,setStep] = useState(1)
   const [interviewData,setInterviewData] = useState(null)
   return (
@@ -30,4 +30,4 @@ function interviewPage() {
   )
 }
 
-export default interviewPage
+export default InterviewPage

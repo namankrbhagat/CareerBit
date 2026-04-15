@@ -2,6 +2,7 @@ import React from 'react'
 import maleVideo from "../assets/videos/male-ai.mp4"
 import femaleVideo from "../assets/videos/female-ai.mp4"
 import Timer from './Timer'
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 import { useState } from 'react'
@@ -34,7 +35,19 @@ function Step2Interview({ interviewData, onFinish }) {
   const videoRef = useRef(null);
 
   const currentQuestion = questions[currentIndex];
+  function startMic() {
+    if (recognitionRef.current && !isAIPlaying) {
+      try {
+        recognitionRef.current.start();
+      } catch (err) { console.error(err); }
+    }
+  }
 
+  function stopMic() {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+  }
 
   useEffect(() => {
     const loadVoices = () => {
@@ -222,19 +235,7 @@ function Step2Interview({ interviewData, onFinish }) {
   }, []);
 
 
-  const startMic = () => {
-    if (recognitionRef.current && !isAIPlaying) {
-      try {
-        recognitionRef.current.start();
-      } catch { }
-    }
-  };
 
-  const stopMic = () => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-  };
   const toggleMic = () => {
     if (isMicOn) {
       stopMic();
@@ -263,8 +264,8 @@ function Step2Interview({ interviewData, onFinish }) {
       speakText(result.data.feedback)
       setIsSubmitting(false)
     } catch (error) {
-console.log(error)
-setIsSubmitting(false)
+      console.log(error)
+      setIsSubmitting(false)
     }
   }
 

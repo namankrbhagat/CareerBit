@@ -29,7 +29,7 @@ function Auth() {
       )
 
       dispatch(setUserData(result.data))
-      navigate("/");
+      navigate("/interview");
     } catch (error) {
       console.log(error)
       dispatch(setUserData(null))

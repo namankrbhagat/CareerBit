@@ -1,7 +1,7 @@
 import Home  from './pages/Home';
 import { Route,Routes } from 'react-router-dom';
 import Auth from './pages/Auth';
-import interviewPage from './pages/interviewPage';
+import InterviewPage from './pages/interviewPage';
 import { useEffect } from 'react';
 import axios from 'axios';
 import {useDispatch} from 'react-redux'
@@ -31,7 +31,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/auth' element={<Auth/>}/>
-      <Route path='/interview' element={<interviewPage/>}/>
+      <Route path='/interview' element={<InterviewPage/>}/>
     </Routes>
   )
 }

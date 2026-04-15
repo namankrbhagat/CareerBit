@@ -4,7 +4,7 @@ import { upload } from "../middlewares/multer.middleware.js";
 import { analyzeResume, finishInterview, generateQuestion, submitAnswer } from "../controllers/interview.controller.js";
 
 const interviewRouter = express.Router()
-interviewRouter.post("/resume",isAuth,upload.single("resume",analyzeResume))
+interviewRouter.post("/resume",isAuth,upload.single("resume"),analyzeResume)
 interviewRouter.post("/generate-questions",isAuth,generateQuestion)
 interviewRouter.post("/submit-answer",isAuth,submitAnswer)
 interviewRouter.post("/finish",isAuth,finishInterview)
