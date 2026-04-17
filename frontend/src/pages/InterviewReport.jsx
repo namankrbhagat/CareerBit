@@ -11,7 +11,11 @@ function InterviewReport() {
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const result = await axios.get(ServerUrl + '/api/interview/report/' + id , {withCredentials : true})
+        const token = localStorage.getItem("token")
+        const result = await axios.get(ServerUrl + '/api/interview/report/' + id , {
+          withCredentials: true,
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        })
         console.log(result.data)
         setReport(result.data)
 
