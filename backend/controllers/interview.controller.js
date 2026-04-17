@@ -13,11 +13,8 @@ export const analyzeResume = async(req,res) => {
       return res.status(400).json({message : "Resume not uploaded"})
     }
 
-    const filePath = req.file.path;
-
-    const fileBuffer = await fs.promises.readFile(filePath)
-    const uint8Array = new Uint8Array(fileBuffer)
-
+    // Use in-memory buffer directly (no disk file needed)
+    const uint8Array = new Uint8Array(req.file.buffer)
     const pdf = await pdfjsLib.getDocument({data:uint8Array}).promise;
 
     let resumeText = "";
@@ -55,9 +52,6 @@ export const analyzeResume = async(req,res) => {
     const cleanedResponse = aiResponse.replace(/```json/gi, "").replace(/```/g, "").trim();
     const parsed = JSON.parse(cleanedResponse);
 
-
-    fs.unlinkSync(filePath)
-
     res.json({
       role: parsed.role,
       experience : parsed.experience,
@@ -66,15 +60,9 @@ export const analyzeResume = async(req,res) => {
       resumeText
     });
 
-
   } catch (error) {
-    console.log(error);
-
-    if(req.file && fs.existsSync(req.file.path)){
-      fs.unlinkSync(req.file.path)
-    }
-
-    return res.status(400).json({message : error.message})
+    console.error("analyzeResume error:", error);
+    return res.status(500).json({message : error.message})
   }
 }
 
