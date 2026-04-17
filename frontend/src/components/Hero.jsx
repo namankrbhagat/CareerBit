@@ -20,9 +20,9 @@ const Hero = () => {
           <Link to="/auth" className="inline-flex items-center justify-center bg-inverse-surface text-surface-container-lowest px-10 py-5 rounded-xl font-bold text-lg btn-shadow active:scale-95 transition-all">
             Start Interview
           </Link>
-          <button className="bg-surface-container text-on-surface px-10 py-5 rounded-xl font-bold text-lg active:scale-95 transition-all">
+          <Link to="/history" className="bg-surface-container text-on-surface px-10 py-5 rounded-xl font-bold text-lg active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center">
             View History
-          </button>
+          </Link>
         </div>
       </div>
       <div className="flex-1 relative">

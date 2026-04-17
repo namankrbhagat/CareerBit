@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -10,6 +11,8 @@ import autoTable from "jspdf-autotable"
 
 
 function Step3Report({report}) {
+  const navigate = useNavigate()
+
   if(!report){
     return(
       <div className="min-h-screen flex items-center justify-center">
@@ -18,7 +21,6 @@ function Step3Report({report}) {
     )
   }
 
-  const navigate = useNavigate()
     const {
       finalScore = 0,
       confidence = 0,

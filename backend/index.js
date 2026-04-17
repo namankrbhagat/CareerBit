@@ -6,6 +6,7 @@ import cors from 'cors';
 import authRouter from './routes/auth.route.js';
 import userRouter from './routes/user.route.js';
 import interviewRouter from './routes/interview.route.js';
+import paymentRouter from './routes/payment.router.js';
 
 configDotenv()
 const app = express();
@@ -17,14 +18,15 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParser())
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.path} - Cookies:`, req.cookies);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`[${req.method}] ${req.path} - Cookies:`, req.cookies);
+//   next();
+// });
 
 app.use("/api/auth",authRouter)
 app.use("/api/user",userRouter)
 app.use("/api/interview",interviewRouter)
+app.use("/api/payment",paymentRouter)
 const PORT= process.env.PORT || 8000;
 
 app.listen(PORT, () => {

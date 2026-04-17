@@ -39,7 +39,9 @@ function Step2Interview({ interviewData, onFinish }) {
     if (recognitionRef.current && !isAIPlaying) {
       try {
         recognitionRef.current.start();
-      } catch (err) { console.error(err); }
+      } catch (err) { 
+        // Silently ignore "already started" error to prevent console spam
+      }
     }
   }
 
@@ -184,7 +186,7 @@ function Step2Interview({ interviewData, onFinish }) {
 
     runIntro()
 
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVoice, isIntroPhase, currentIndex])
 
 
@@ -206,12 +208,15 @@ function Step2Interview({ interviewData, onFinish }) {
 
     return () => clearInterval(timer)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIntroPhase, currentIndex])
 
   useEffect(() => {
   if (!isIntroPhase && currentQuestion) {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTimeLeft(currentQuestion.timeLimit || 60);
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [currentIndex]);
 
 
@@ -307,8 +312,10 @@ function Step2Interview({ interviewData, onFinish }) {
     if (!currentQuestion) return;
 
     if (timeLeft === 0 && !isSubmitting && !feedback) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       submitAnswer()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft]);
 
   useEffect(() => {

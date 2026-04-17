@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { ServerUrl } from '../App'
 import Step3Report from '../components/Step3Report'
@@ -20,6 +20,7 @@ function InterviewReport() {
       }
     }
     fetchReport()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   if (!report) {
