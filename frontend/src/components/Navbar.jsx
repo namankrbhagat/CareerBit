@@ -2,10 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BsRobot } from 'react-icons/bs';
 import { CircleDollarSign } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import AuthModel from './AuthModel';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const dropdownRef = useRef(null);
+  
+  const { userData } = useSelector(state => state.user);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,12 +60,20 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="bg-black text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-sm cursor-pointer hover:bg-stone-800 transition-colors">
-            A
+          <div 
+             onClick={() => !userData && setShowAuthModal(true)}
+             className="bg-black text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-sm cursor-pointer hover:bg-stone-800 transition-colors uppercase"
+          >
+            {userData ? userData.name.charAt(0) : "A"}
           </div>
           
         </div>
       </nav>
+
+      {/* Auth Modal Overlay */}
+      {showAuthModal && !userData && (
+        <AuthModel onClose={() => setShowAuthModal(false)} />
+      )}
     </div>
   );
 };

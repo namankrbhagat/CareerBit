@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import { setUserData } from '../redux/userSlice'
 
-function Auth() {
+function Auth({ isModel = false }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,14 +29,17 @@ function Auth() {
       )
 
       dispatch(setUserData(result.data))
-      navigate("/interview");
+      // Only navigate away if it's the full page auth logic
+      if (!isModel) {
+        navigate("/interview");
+      }
     } catch (error) {
       console.log(error)
       dispatch(setUserData(null))
     }
   }
   return (
-    <div className='w-full min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20'>
+    <div className={!isModel ? 'w-full min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20' : ''}>
       <motion.div 
         initial={{opacity:0,y:-40}}
         animate={{opacity:1,y:0}}

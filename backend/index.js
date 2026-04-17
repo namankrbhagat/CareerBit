@@ -11,11 +11,16 @@ import paymentRouter from './routes/payment.router.js';
 configDotenv()
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "http://127.0.0.1:5173"
+];
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || [
-    "http://localhost:5173", 
-    "http://127.0.0.1:5173"
-  ],
+  origin: allowedOrigins,
   credentials:true
 }))
 
