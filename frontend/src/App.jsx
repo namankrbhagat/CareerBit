@@ -10,7 +10,7 @@ import InterviewHistory from './pages/interviewHistory';
 import Pricing from './pages/Pricing';
 import InterviewReport from './pages/interviewReport';
 
-export const ServerUrl = "http://localhost:5000"
+export const ServerUrl = "https://careerbit-1.onrender.com"
 function App() {
   const dispatch = useDispatch();
 
