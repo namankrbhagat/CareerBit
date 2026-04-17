@@ -62,7 +62,7 @@ function Pricing() {
   const handlePayment = async (plan) => {
     try {
       setLoadingPlan(plan.id)
-
+      const token = localStorage.getItem("token")
       const amount =  
       plan.id === "basic" ? 100 :
       plan.id === "pro" ? 500 : 0;
@@ -71,7 +71,10 @@ function Pricing() {
         planId: plan.id,
         amount: amount,
         credits: plan.credits,
-      },{withCredentials:true})
+      },{
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` }
+      })
       
 
       const options = {
@@ -83,7 +86,10 @@ function Pricing() {
       order_id: result.data.id,
 
       handler:async function (response) {
-        const verifypay = await axios.post(ServerUrl + "/api/payment/verify" ,response , {withCredentials:true})
+        const verifypay = await axios.post(ServerUrl + "/api/payment/verify" ,response , {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` }
+        })
         dispatch(setUserData(verifypay.data.user))
 
           alert("Payment Successful 🎉 Credits Added!");

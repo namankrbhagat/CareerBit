@@ -257,13 +257,17 @@ function Step2Interview({ interviewData, onFinish }) {
     setIsSubmitting(true)
 
     try {
+      const token = localStorage.getItem("token")
       const result = await axios.post(ServerUrl + "/api/interview/submit-answer", {
         interviewId,
         questionIndex: currentIndex,
         answer,
         timeTaken:
           currentQuestion.timeLimit - timeLeft,
-      } , {withCredentials:true})
+      } , {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` }
+      })
 
       setFeedback(result.data.feedback)
       speakText(result.data.feedback)
@@ -297,7 +301,11 @@ function Step2Interview({ interviewData, onFinish }) {
     stopMic()
     setIsMicOn(false)
     try {
-      const result = await axios.post(ServerUrl+ "/api/interview/finish" , { interviewId} , {withCredentials:true})
+      const token = localStorage.getItem("token")
+      const result = await axios.post(ServerUrl+ "/api/interview/finish" , { interviewId} , {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` }
+      })
 
       console.log(result.data)
       onFinish(result.data)

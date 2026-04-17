@@ -28,9 +28,13 @@ function Step1setup({onStart}) {
     setAnalyzing(true)
     const formData = new FormData()
     formData.append("resume",resumeFile)
+    const token = localStorage.getItem("token")
     try {
       const result = await axios.post(ServerUrl + "/api/interview/resume",
-                                        formData, {withCredentials:true}  
+        formData, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` }
+        }
       )
       console.log(result.data)
       setRole(result.data.role || "")
@@ -49,9 +53,13 @@ function Step1setup({onStart}) {
 
   const handleStart = async () =>{
     setLoading(true)
+    const token = localStorage.getItem("token")
     try {
       const result = await axios.post(ServerUrl + "/api/interview/generate-questions",
-        {role,experience,mode,resumeText,projects,skills},{withCredentials:true}
+        {role,experience,mode,resumeText,projects,skills},{
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` }
+        }
       )
 
       console.log(result.data)

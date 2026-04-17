@@ -28,7 +28,8 @@ function Auth({ isModel = false }) {
         {withCredentials:true}
       )
 
-      dispatch(setUserData(result.data))
+      dispatch(setUserData(result.data.user))
+      localStorage.setItem("token", result.data.token)
       // Only navigate away if it's the full page auth logic
       if (!isModel) {
         navigate("/interview");

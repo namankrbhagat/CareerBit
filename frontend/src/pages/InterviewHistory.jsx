@@ -10,12 +10,17 @@ function InterviewHistory() {
     useEffect(() => {
         const getMyInterviews = async () => {
             try {
-                const result = await axios.get(ServerUrl + "/api/interview/get-interview", { withCredentials: true })
+                const token = localStorage.getItem("token")
+                const result = await axios.get(ServerUrl + "/api/interview/get-interview", {
+                    withCredentials: true,
+                    headers: token ? { Authorization: `Bearer ${token}` } : {}
+                })
                 console.log(result.data)
 
-                setInterviews(result.data)
+                setInterviews(Array.isArray(result.data) ? result.data : [])
             } catch (error) {
                 console.log(error)
+                setInterviews([])
             }
         }
         getMyInterviews()
