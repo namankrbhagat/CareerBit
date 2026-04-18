@@ -7,7 +7,6 @@ import AuthModel from './AuthModel';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const dropdownRef = useRef(null);
   
   const { userData } = useSelector(state => state.user);
@@ -61,19 +60,13 @@ const Navbar = () => {
           </div>
 
           <div 
-             onClick={() => !userData && setShowAuthModal(true)}
-             className="bg-black text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-sm cursor-pointer hover:bg-stone-800 transition-colors uppercase"
+             className="bg-black text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow-sm uppercase select-none"
           >
             {userData ? userData.name.charAt(0) : "A"}
           </div>
           
         </div>
       </nav>
-
-      {/* Auth Modal Overlay */}
-      {showAuthModal && !userData && (
-        <AuthModel onClose={() => setShowAuthModal(false)} />
-      )}
     </div>
   );
 };
